@@ -47,17 +47,13 @@ body {
 
 /* LOGIN */
 #login, #register{
-    display: none;
+    display: block;
     background-color: white;
     padding: 20px;
     border: 1px solid #ccc;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
     border-radius: 5px; 
     width: 20em;
-}
-
-#register {
-    display: block;
 }
 
 input {
@@ -69,6 +65,7 @@ input {
 
 #form-container, #create {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     /* height: calc(100vh - 100px); */

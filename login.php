@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +13,19 @@
 </head>
 <body>
     <div class="navbar" id="nav">
-        <a href="login.php" class="loginLogout">Login</a>
+        <a href="login.php" class="loginLogout" id="login_logout">Login</a>
         <a href="create_listing.html">Create Listing</a>
-        <a href="index.html">Feed</a>
+        <a href="index.php">Feed</a>
     </div>
-
+    <?php
+            if(isset($_SESSION['user'])) {
+                // destroy and end the session
+                session_unset();
+                session_destroy();        
+        ?>      <h2 style="text-align: center;">Successful logout.</h2>
+        <?php
+            }
+        ?>
 <?php
     $servername = "mysql:host=127.0.0.1; dbname=ds_estate";
     $username= "root";
@@ -49,20 +61,22 @@
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            // Check if the username already exists
+            // Check if the username exists
             $sql = "SELECT COUNT(*) FROM users WHERE username = :username";
             $stmt = $conn->prepare($sql);
             $stmt->execute(['username' => $username]);
-            $usernameExists = $stmt->fetchColumn();
+            $user = $stmt->fetchColumn();
             
-            // Check if the email already exists
+            // Check if the password exists
             $sql = "SELECT COUNT(*) FROM users WHERE password = :password";
             $stmt = $conn->prepare($sql);
             $stmt->execute(['password' => $password]);
-            $passwordExists = $stmt->fetchColumn();
+            $correct_password = $stmt->fetchColumn();
 
-            if ($usernameExists && $passwordExists){
+            if ($user && $correct_password) {
                 echo "<script>login_success();</script>";
+                $_SESSION['user'] = $username;
+                exit();
             }
             else{
                 echo "<script>login_error();</script>";

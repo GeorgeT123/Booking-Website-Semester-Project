@@ -30,7 +30,7 @@
     <div class="navbar" id="nav">
         <a href="login.php" class="loginLogout">Login</a>
         <a href="create_listing.html">Create Listing</a>
-        <a href="index.html">Feed</a>
+        <a href="index.php">Feed</a>
     </div>
 
     <div id="form-container">

@@ -1,3 +1,7 @@
+<?php
+// Start the session
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +13,22 @@
 </head>
 <body>
     <div class="navbar" id="nav">
-        <a href="login.php">Login</a>
+        <?php
+            if(isset($_SESSION['user'])) {
+        ?>  <a href="login.php" id="login_logout">Logout</a>
+        <?php    
+            }else{        
+        ?>   <a href="login.php" id="login_logout">Login</a>
+        <?php
+            }
+        ?>
+        
         <a href="create_listing.html">Create Listing</a>
-        <a href="index.html" class="feed">Feed</a>
+        <a href="index.php" class="feed">Feed</a>
     </div>
     
+
+
     <div id="listings">
         <div class="listing">
             HELLO

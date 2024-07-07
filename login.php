@@ -22,7 +22,7 @@ session_start();
                 // destroy and end the session
                 session_unset();
                 session_destroy();        
-        ?>      <h2 style="text-align: center;">Successful logout.</h2>
+        ?>      <h2 style="text-align: center;">Successful logout.</h2> 
         <?php
             }
         ?>
@@ -67,15 +67,15 @@ session_start();
             $stmt->execute(['username' => $username]);
             $user = $stmt->fetchColumn();
             
-            // Check if the password exists
-            $sql = "SELECT COUNT(*) FROM users WHERE password = :password";
+            $sql = "SELECT password FROM users WHERE username = '$username'";
             $stmt = $conn->prepare($sql);
-            $stmt->execute(['password' => $password]);
-            $correct_password = $stmt->fetchColumn();
+            $stmt->execute();
+            $hash = $stmt->fetchColumn();  
+            $verify = password_verify($password, $hash);
 
-            if ($user && $correct_password) {
+            if ($user && $verify) {
                 echo "<script>login_success();</script>";
-                $_SESSION['user'] = $username;
+                $_SESSION["user"] = $username;
                 exit();
             }
             else{
@@ -90,7 +90,7 @@ session_start();
             <p>University of Piraeus</p>
             <p><a href="tel:+302104142000">+302104142000</a></p>
             <p><a href="mailto:info@unipi.gr">info@unipi.gr</a></p>
-            <p>Karaoli ke Dimitriou 80, Pireas 185 34</p>
+            <p>Karaoli kai Dimitriou 80, Pireas 185 34</p>
         </div>
        
         <div class="map">

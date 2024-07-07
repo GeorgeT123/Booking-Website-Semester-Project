@@ -39,10 +39,49 @@ body {
 }
 
 .listing {
-    background-color: #f1f1f1;
     border: 1px solid #ccc;
-    padding: 20px;
-    text-align: center;   
+    padding: 20px;   
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.listing-image {
+    width: 420px;
+    height: auto;
+    margin-right: 20px;
+}
+
+.listing-details {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.listing-title {
+    font-size: 1.5em;
+    margin: 0;
+}
+
+.listing-location,
+.listing-rooms,
+.listing-price {
+    margin: 5px 0;
+}
+
+.booking-button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    align-self: right;
+    margin-top: 10px;
+}
+
+.booking-button:hover {
+    background-color: #0056b3;
 }
 
 /* LOGIN */
@@ -72,6 +111,25 @@ input {
     height: 35em;
 }
 
+/* BOOKING */
+#booking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh + 50px);
+}
+
+#booking-form {
+    display: block;
+    background-color: white;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px; 
+}
+
+/* FOOTER */
 footer {
     background-color: #452c63;
     color: white;

@@ -40,7 +40,34 @@
                 <input type="text" name="lname" placeholder="Last Name" required>
                 <input type="text" name="username" placeholder="Username" required>
                 <input type="email" name="email" placeholder="E-Mail" required>
-                <input type="password" name="password" placeholder="Password" required minlength="4" maxlength="10">
+                <input type="password" name="password" placeholder="Password" id="passw" required minlength="4" maxlength="10">
+                <p id="password-error" style="color:red; display:none;">Password must contain at least one special character.</p>
+                <script>
+                    //check if password contains special character
+                    document.getElementById('passw').addEventListener('input', function() {
+                        var password = this.value;
+                        var errorMessage = document.getElementById('password-error');
+                        var specialCharPattern = /[!@#$%^&*(),.?":{}|<>]/g;
+
+                        if (specialCharPattern.test(password)) {
+                            errorMessage.style.display = 'none';
+                            document.querySelector('input[type="submit"]').disabled = false;
+                        } else {
+                            errorMessage.style.display = 'block';
+                            document.querySelector('input[type="submit"]').disabled = true; 
+                        }
+                    });
+                </script>
+                <!-- <script>
+                    //password checker for special characters
+                    const input = document.getElementById("passw");
+                    input.onkeyup() = function() {
+                        let special_characters = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+                        if (!input.value.match(special_characters)) {
+                            input.appendChild(document.createElement("p").innerHTML="Please enter at least one special character.")
+                        }
+                    }   
+                </script> -->
                 <input type="submit" value="Register">
             </form>
         </div>

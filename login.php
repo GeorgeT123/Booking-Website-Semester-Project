@@ -14,7 +14,7 @@ session_start();
 <body>
     <div class="navbar" id="nav">
         <a href="login.php" class="loginLogout" id="login_logout">Login</a>
-        <a href="create_listing.html">Create Listing</a>
+        <a href="create_listing.php">Create Listing</a>
         <a href="index.php">Feed</a>
     </div>
     <?php

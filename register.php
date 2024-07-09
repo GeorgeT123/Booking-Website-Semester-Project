@@ -29,7 +29,7 @@
 
     <div class="navbar" id="nav">
         <a href="login.php" class="loginLogout">Login</a>
-        <a href="create_listing.html">Create Listing</a>
+        <a href="create_listing.php">Create Listing</a>
         <a href="index.php">Feed</a>
     </div>
 

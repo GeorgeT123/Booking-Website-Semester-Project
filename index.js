@@ -42,13 +42,6 @@ function login_error() {
 }
 
 function date_error() {
-    // const date_from = document.getElementById('date_from').value;
-    // const date_to = document.getElementById('date_to').value;
-
-    // if(date_from < date_to) {
-
-    // }
-
     const element = document.createElement("p");
     element.innerHTML = "<br>The property is unavailable during these dates. <br>Please try different dates."
     element.style.color = "red";
@@ -62,11 +55,9 @@ function booking_success() {
     form.style.display = "none"
     const nav = document.getElementById("nav")
     nav.style.display = "none"
-    console.log("1");
     const element = document.createElement("h2");
     element.innerHTML = "Booking succesful. Thanks for your patronage."
     document.getElementById("booking").appendChild(element);
-    console.log("2");
     setTimeout(() => {
         window.location.replace("index.php");
       }, 3500);
@@ -78,4 +69,21 @@ function price_calculator(total_price) {
     element.style.fontSize = "25px"
     element.style.textAlign = "center"
     document.getElementById("booking-form").appendChild(element)
+}
+
+function listing_creation() {
+    const form = document.getElementById("create-listing")
+    form.style.display = "none"
+    console.log("1");
+    const nav = document.getElementById("nav")
+    nav.style.display = "none"
+    console.log("2");
+    const element = document.createElement("h2");
+    element.innerHTML = "Succesfully listed your property."
+    console.log("3");
+    document.getElementById("create").appendChild(element);
+    setTimeout(() => {
+        console.log("4");
+        window.location.replace("index.php");
+      }, 2000);
 }

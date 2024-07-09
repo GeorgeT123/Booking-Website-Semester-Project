@@ -23,11 +23,12 @@ session_start();
             }
         ?>
         
-        <a href="create_listing.html">Create Listing</a>
+        <a href="create_listing.php">Create Listing</a>
         <a href="index.php" class="feed">Feed</a>
     </div>
 
     <?php
+    //initiate db connection
     $servername = "mysql:host=127.0.0.1; dbname=ds_estate";
     $username= "root";
     $password = "";
@@ -39,45 +40,49 @@ session_start();
     }
     ?>
 
-    <div id="listings">
-        <div class="listing">
+    <div id="listings">   
             <?php
                 // Prepare and execute query
-                $sql = "SELECT id, title, location, rooms, price, image FROM listings WHERE id='1'";
+                $sql = "SELECT id, title, location, rooms, price, image FROM listings";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
-                // Fetch all rows
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                foreach($result as $row){       
-                    $photo = htmlspecialchars($row['image']);
-                    $title = htmlspecialchars($row['title']);
-                    $location = htmlspecialchars($row['location']);
-                    $rooms = htmlspecialchars($row['rooms']);
-                    $price = htmlspecialchars($row['price']);
-                    $listing_id = htmlspecialchars($row['id']);
-                }     
-            ?>
-            <img src="<?php echo $photo; ?>" alt="Hotel Image" class="listing-image"> <!--for images add 2 \ (\\) in path when saving to db -->
-            <div class="listing-details">
-                <h2 class="listing-title"><?php echo $title; ?></h2>
-                <p class="listing-location"><?php echo $location; ?></p>
-                <p class="listing-rooms">Rooms: <?php echo $rooms; ?></p>
-                <p class="listing-price">€<?php echo $price; ?> per night</p>
-                <?php
-                if(isset($_SESSION['user'])) {
-                    $_SESSION["listing"] = $listing_id;
-                ?>   <button class="booking-button" onclick="location.href='booking.php'">Book Now</button>
-                <?php    
-                }else{        
-                ?>   <button class="booking-button" onclick="location.href='login.php'">Login to Book property</button>
-                <?php
+                if ($stmt->rowCount() != 0) {
+                    foreach($result as $row){
+                        $photo = htmlspecialchars($row['image']);
+                        $title = htmlspecialchars($row['title']);
+                        $location = htmlspecialchars($row['location']);
+                        $rooms = htmlspecialchars($row['rooms']);
+                        $price = htmlspecialchars($row['price']);
+                        $listing_id = htmlspecialchars($row['id']);
+            ?>        <div class="listing">
+                        <img src="<?php echo $photo; ?>" alt="Hotel Image" class="listing-image"> <!--for images add 2 \ (\\) in path when saving to db -->
+                        <div class="listing-details">
+                            <h2 class="listing-title"><?php echo $title; ?></h2>
+                            <p class="listing-location"><?php echo $location; ?></p>
+                            <p class="listing-rooms">Rooms: <?php echo $rooms; ?></p>
+                            <p class="listing-price">€<?php echo $price; ?> per night</p>
+                            
+                            <?php
+                                if(isset($_SESSION['user'])) {
+                                $_SESSION['listing'] = $listing_id;
+                            ?>   <button class="booking-button" onclick="location.href='booking.php?id=<?php echo $listing_id;?>'">Book Now</button>
+                            <?php    
+                                }else{        
+                            ?>   <button class="booking-button" onclick="location.href='login.php'">Login to Book property</button>
+                            <?php
+                                } ?>
+                        </div>
+                      </div>
+                <?php    }
                 }
-                ?>
-            </div>
-        </div>    
+                else {
+                    echo '<h2 style="text-align: center;">No listings were found.</h2>';
+                }
+            ?>
     </div>
-
+    
     <footer id="footer">
         <div class="contact">
             <h3>Contact Us</h3>

@@ -14,6 +14,7 @@ session_start();
 <body>
 
     <?php
+    //initiate db connection
     $servername = "mysql:host=127.0.0.1; dbname=ds_estate";
     $username= "root";
     $password = "";
@@ -41,18 +42,21 @@ session_start();
         <?php
             }
         ?>        
-        <a href="create_listing.html">Create Listing</a>
+        <a href="create_listing.php">Create Listing</a>
         <a href="index.php">Feed</a>
     </div>
     
-    <?php $listing_id = $_SESSION["listing"]; 
-          $username = $_SESSION["user"];
+    <?php //$listing_id = $_SESSION["listing"]; 
+        $listing_id = $_GET['id'];
+        echo $listing_id;  
+        $username = $_SESSION["user"];
     ?>
         
     <div id="booking">
         <div class="listing">
             <?php
                 // Prepare and execute query
+
                 $sql = "SELECT title, location, rooms, price, image FROM listings WHERE id='$listing_id'";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
@@ -93,7 +97,7 @@ session_start();
                     <input type="date" name="date_from" style="width:65%; text-align:center;" id="date_from" required>
                     <label for="date_from"><b>Date To</b></label>
                     <input type="date" name="date_to" style="width:65%; text-align:center;" id="date_to" required>
-                    <input type="submit" value="Continue" id="continue-button" style="background-color: #64418f; color:white; font-weight: bold; cursor: pointer;">
+                    <input type="submit" value="Continue" id="continue-button">
                     <!-- <button id="continue-button" onclick="location.href='booking.php'" style="background-color: #64418f; color:white; font-weight: bold; cursor: pointer; width:100%; height:3em;">Continue</button> -->
                 </div>  <!-- make this with on click button and check on js? right now it is one big form!!! -->
             <!-- </form> -->
@@ -134,7 +138,7 @@ session_start();
                                     <input type="text" name="lname" placeholder="Last Name" value="<?php echo $lname; ?>" required>
                                     <input type="email" name="email" placeholder="E-Mail" value="<?php echo $email; ?>" required>
                                     <input type="hidden" name="temp" value="null">
-                                    <input type="submit" name="book" value="Book Now" style="background-color: #64418f; color:white; font-weight: bold; cursor: pointer;">
+                                    <input type="submit" name="book" value="Book Now">
                                 </div>
                             </form>
                             <style> #continue-button {display:none;} </style>

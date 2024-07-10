@@ -27,10 +27,22 @@
     }
 ?>
 
-    <div class="navbar" id="nav">
-        <a href="login.php" class="loginLogout">Login</a>
-        <a href="create_listing.php">Create Listing</a>
-        <a href="index.php">Feed</a>
+    <div class="navbar" id="nav">   
+        <div class="desktop">
+            <a href="login.php" id="login_logout">Login</a>      
+            <a href="create_listing.php" class="loginLogout">Create Listing</a>
+            <a href="index.php">Feed</a>
+        </div>
+
+        <div class="mobile">
+            <input class="menu-btn" type="checkbox" id="menu-btn" />
+            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            <ul class="menu">
+                <li><a href="login.php" id="login_logout" class="loginLogout">Login</a></li>
+                <li><a href="create_listing.php">Create Listing</a></li>
+                <li><a href="index.php">Feed</a></li>
+            </ul>
+        </div>
     </div>
 
     <div id="form-container">

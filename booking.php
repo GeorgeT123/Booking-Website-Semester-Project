@@ -32,23 +32,43 @@ session_start();
     }
     ?>
 
-    <div class="navbar" id="nav">
-        <?php
-            if(isset($_SESSION['user'])) {
-        ?>  <a href="login.php" id="login_logout">Logout</a>
-        <?php    
-            }else{        
-        ?>   <a href="login.php" id="login_logout">Login</a>
-        <?php
-            }
-        ?>        
-        <a href="create_listing.php">Create Listing</a>
-        <a href="index.php">Feed</a>
+    <div class="navbar" id="nav">   
+        <div class="desktop">
+            <?php
+                    if(isset($_SESSION['user'])) {
+            ?>  <a href="login.php" id="login_logout">Logout</a>
+            <?php    
+                }else{        
+            ?>   <a href="login.php" id="login_logout">Login</a>
+            <?php
+                }
+            ?>
+                    
+            <a href="create_listing.php">Create Listing</a>
+            <a href="index.php" class="feed">Feed</a>
+        </div>
+
+        <div class="mobile">
+            <input class="menu-btn" type="checkbox" id="menu-btn" />
+            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            <ul class="menu">
+                <?php
+                        if(isset($_SESSION['user'])) {
+                ?>  <li><a href="login.php" id="login_logout">Logout</a></li>
+                <?php    
+                    }else{        
+                ?>   <li><a href="login.php" id="login_logout">Login</a></li>
+                <?php
+                    }
+                ?>
+                <li><a href="create_listing.php">Create Listing</a></li>
+                <li><a href="index.php" class="feed">Feed</a></li>
+            </ul>
+        </div>
     </div>
     
     <?php //$listing_id = $_SESSION["listing"]; 
         $listing_id = $_GET['id'];
-        echo $listing_id;  
         $username = $_SESSION["user"];
     ?>
         
@@ -91,8 +111,8 @@ session_start();
             </div>
        </div>
        <div id="booking-form">
-            <form method="post" id="booking-dates">
-                <div style="display:flex; flex-direction: row; gap:2em; margin:2em;">
+            <form method="post">
+                <div id="booking-dates">
                     <label for="date_from"><b>Date From</b></label>
                     <input type="date" name="date_from" style="width:65%; text-align:center;" id="date_from" required>
                     <label for="date_from"><b>Date To</b></label>

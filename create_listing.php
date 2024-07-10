@@ -12,18 +12,39 @@ session_start();
     <script src="index.js"></script>
 </head>
 <body>
-    <div class="navbar" id="nav">
-        <?php
-            if(isset($_SESSION['user'])) {
-        ?>  <a href="login.php" id="login_logout">Logout</a>
-        <?php    
-            }else{        
-        ?>   <a href="login.php" id="login_logout">Login</a>
-        <?php
-            }
-        ?>
-        <a href="create_listing.php" class="create_listing">Create Listing</a>
-        <a href="index.php">Feed</a>
+    <div class="navbar" id="nav">   
+        <div class="desktop">
+            <?php
+                    if(isset($_SESSION['user'])) {
+            ?>  <a href="login.php" id="login_logout">Logout</a>
+            <?php    
+                }else{        
+            ?>   <a href="login.php" id="login_logout">Login</a>
+            <?php
+                }
+            ?>
+                    
+            <a href="create_listing.php" class="create_listing">Create Listing</a>
+            <a href="index.php">Feed</a>
+        </div>
+
+        <div class="mobile">
+            <input class="menu-btn" type="checkbox" id="menu-btn" />
+            <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+            <ul class="menu">
+                <?php
+                        if(isset($_SESSION['user'])) {
+                ?>  <li><a href="login.php" id="login_logout">Logout</a></li>
+                <?php    
+                    }else{        
+                ?>   <li><a href="login.php" id="login_logout">Login</a></li>
+                <?php
+                    }
+                ?>
+                <li><a href="create_listing.php" class="create_listing">Create Listing</a></li>
+                <li><a href="index.php">Feed</a></li>
+            </ul>
+        </div>
     </div>
 
     <?php

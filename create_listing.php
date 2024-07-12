@@ -68,10 +68,12 @@ session_start();
                 <input type="file" name="photo" accept="image/*" required>
 
                 <label for="title">Title:</label>
-                <input type="text" name="title" pattern="[A-Za-z\s]+" required>
+                <input id="title" type="text" name="title" pattern="[A-Za-z\s]+" required>
+                <p id="title-error" style="color:red; display:none;">Title must only contain alphabetical characters.</p>
 
                 <label for="location">Location:</label>
-                <input type="text" name="location" pattern="[A-Za-z\s]+" required>
+                <input id="location" type="text" name="location" pattern="[A-Za-z\s]+" required>
+                <p id="location-error" style="color:red; display:none;">Location must only contain alphabetical characters.</p>
 
                 <label for="rooms">Number of rooms:</label>
                 <input type="number" name="rooms" min="1" max="20" pattern="[1-9\s]+" required>
@@ -80,6 +82,10 @@ session_start();
                 <input type="number" name="price" min="1" required>
 
                 <input type="submit" value="Create listing">
+
+                <script>
+                    listing_field_verification();
+                </script>
             </form>
         </div>
     </div>
@@ -110,19 +116,26 @@ session_start();
             $rooms = $_POST['rooms'];
             $price_per_night = $_POST['price'];
 
-            $sql = "INSERT INTO listings (title, location, rooms, price, image) VALUES (:title, :location, :rooms, :price, :image)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':title', $title);
-            $stmt->bindParam(':location', $location);
-            $stmt->bindParam(':rooms', $rooms);
-            $stmt->bindParam(':price', $price_per_night);
-            $stmt->bindParam(':image', $path_name);
+            //check if info has been correctly entered
+            if(ctype_alpha(str_replace(' ', '', $title)) && ctype_alpha(str_replace(' ', '', $location)) && filter_var($rooms, FILTER_VALIDATE_INT) && filter_var($price_per_night, FILTER_VALIDATE_INT)) {
+                $sql = "INSERT INTO listings (title, location, rooms, price, image) VALUES (:title, :location, :rooms, :price, :image)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindParam(':title', $title);
+                $stmt->bindParam(':location', $location);
+                $stmt->bindParam(':rooms', $rooms);
+                $stmt->bindParam(':price', $price_per_night);
+                $stmt->bindParam(':image', $path_name);
 
-            $stmt->execute();
-            
-            echo "<script>listing_creation();</script>";
+                $stmt->execute();
+                
+                echo "<script>listing_creation();</script>";
 
-            exit();
+                exit();
+            }
+            else{
+                echo "<h1 style='text-align:center;'>Please follow the rules while entering your property's information.</h1>";
+                header("Refresh:0");  
+            }
         }
     ?>
     

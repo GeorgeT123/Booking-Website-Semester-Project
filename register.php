@@ -29,8 +29,8 @@
 
     <div class="navbar" id="nav">   
         <div class="desktop">
-            <a href="login.php" id="login_logout">Login</a>      
-            <a href="create_listing.php" class="loginLogout">Create Listing</a>
+            <a href="login.php" id="login_logout" class="loginLogout">Login</a>      
+            <a href="create_listing.php">Create Listing</a>
             <a href="index.php">Feed</a>
         </div>
 
@@ -70,16 +70,6 @@
                         }
                     });
                 </script>
-                <!-- <script>
-                    //password checker for special characters
-                    const input = document.getElementById("passw");
-                    input.onkeyup() = function() {
-                        let special_characters = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-                        if (!input.value.match(special_characters)) {
-                            input.appendChild(document.createElement("p").innerHTML="Please enter at least one special character.")
-                        }
-                    }   
-                </script> -->
                 <input type="submit" value="Register">
             </form>
         </div>

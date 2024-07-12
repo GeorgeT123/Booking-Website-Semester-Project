@@ -67,7 +67,7 @@ session_start();
         </div>
     </div>
     
-    <?php //$listing_id = $_SESSION["listing"]; 
+    <?php 
         $listing_id = $_GET['id'];
         $username = $_SESSION["user"];
     ?>
@@ -118,9 +118,7 @@ session_start();
                     <label for="date_from"><b>Date To</b></label>
                     <input type="date" name="date_to" style="width:65%; text-align:center;" id="date_to" required>
                     <input type="submit" value="Continue" id="continue-button">
-                    <!-- <button id="continue-button" onclick="location.href='booking.php'" style="background-color: #64418f; color:white; font-weight: bold; cursor: pointer; width:100%; height:3em;">Continue</button> -->
-                </div>  <!-- make this with on click button and check on js? right now it is one big form!!! -->
-            <!-- </form> -->
+                </div> 
                 <?php
                     if($_SERVER["REQUEST_METHOD"] == "POST") {
                         $date_from = $_POST['date_from'];
@@ -128,7 +126,7 @@ session_start();
 
                         if($date_from < $date_to){
                             // Check for availability
-                            $sql = "SELECT COUNT(*) FROM reservations WHERE (date_from <= '$date_to' AND date_to >= '$date_from')";
+                            $sql = "SELECT COUNT(*) FROM reservations WHERE (date_from <= '$date_to' AND date_to >= '$date_from' AND reservation_id = '$listing_id')";
                             $stmt = $conn->prepare($sql);
                             $stmt->execute();
                             // Fetch all rows
@@ -143,17 +141,10 @@ session_start();
                                 echo "<script>date_error();</script>";
                             } else { ?>
                             <script>
-                                // document.getElementById('booking-dates').style.display = 'none';
                                 document.getElementById('continue-button').style.display = 'none';
                             </script>
                             <!-- <form method="post"> -->
                                 <div id="booking-user">
-                                    <!-- <div style="display:flex; flex-direction: row; gap:2em; margin:2em;">
-                                        <label for="date_from"><b>Date From</b></label>
-                                        <input type="date" name="date_from" style="width:65%; text-align:center;" id="date_from" required>
-                                        <label for="date_from"><b>Date To</b></label>
-                                        <input type="date" name="date_to" style="width:65%; text-align:center;" id="date_to" required>
-                                    </div> -->
                                     <input type="text" name="fname" placeholder="First Name" value="<?php echo $fname; ?>" required>
                                     <input type="text" name="lname" placeholder="Last Name" value="<?php echo $lname; ?>" required>
                                     <input type="email" name="email" placeholder="E-Mail" value="<?php echo $email; ?>" required>
@@ -163,11 +154,6 @@ session_start();
                             </form>
                             <style> #continue-button {display:none;} </style>
                         <?php     
-                            //CALCULATE TOTAL PRICE 
-                            // $date_from = json_encode($date_from); 
-                            // $date_to = json_encode($date_to);
-                            // $price = json_encode($price);
-                            // echo "<script>price_calculator($price, $date_from, $date_to);</script>";
                             $discount = rand(10,30)/100;
                             $from = new DateTime($date_from);//date('d', strtotime($date_from));
                             $to = new DateTime($date_to);//date('d', strtotime($date_to));
@@ -189,15 +175,12 @@ session_start();
     <?php
     $temp = $_POST['temp'];
     if($_SERVER["REQUEST_METHOD"] == "POST" && $temp) {   
-    //    $counter++;
-    //    if($counter==2){ 
+
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $email = $_POST['email'];
-        // $date_from = $_POST['date_from'];
-        // $date_to = $_POST['date_to'];
 
-        $sql = "INSERT INTO reservations (fname, lname, email, date_from, date_to, total_price) VALUES (:fname, :lname, :email, :date_from, :date_to, :total_price)";
+        $sql = "INSERT INTO reservations (fname, lname, email, date_from, date_to, total_price, reservation_id) VALUES (:fname, :lname, :email, :date_from, :date_to, :total_price, :reservation_id)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':fname', $fname);
         $stmt->bindParam(':lname', $lname);
@@ -205,30 +188,14 @@ session_start();
         $stmt->bindParam(':date_from', $date_from);
         $stmt->bindParam(':date_to', $date_to);
         $stmt->bindParam(':total_price', $total_price);
+        $stmt->bindParam(':reservation_id', $listing_id);
 
         $stmt->execute();
 
         echo "<script>booking_success();</script>";
-        // echo '<h2 style="text-align:center;">Booking succesful. Thanks for your patronage.</h2>';
 
-        // header("Location: index.php");
         exit();
-    //    }
     }
-        // $date_from = $_POST['date_from'];
-        // $date_to = $_POST['date_to'];
-
-        // echo $date_from < $date_to;
-        // // Check if the dates already exists
-        // $sql = "SELECT COUNT(*) FROM reservations WHERE date_from = :date_from";
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute(['date_from' => $date_from]);
-        // $dateExists = $stmt->fetchColumn();
-
-        // $sql = "SELECT COUNT(*) FROM reservations WHERE date_to = :date_to";
-        // $stmt = $conn->prepare($sql);
-        // $stmt->execute(['date_to' => $date_to]);
-        // $dateExists = $stmt->fetchColumn();
     ?>
     
     <footer id="footer">

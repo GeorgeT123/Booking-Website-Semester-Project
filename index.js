@@ -47,7 +47,7 @@ function date_error() {
     element.style.color = "red";
     element.style.fontSize = "15px"
     element.style.textAlign = "center"
-    document.getElementById("booking-dates").appendChild(element);
+    document.getElementById("booking-form").appendChild(element);
 }
 
 function booking_success() {
@@ -69,6 +69,37 @@ function price_calculator(total_price) {
     element.style.fontSize = "25px"
     element.style.textAlign = "center"
     document.getElementById("booking-form").appendChild(element)
+}
+
+function listing_field_verification() {
+    //check if fields are filled out correctly
+    const title = document.getElementById('title');
+    const location = document.getElementById('location');
+
+    title.addEventListener('keyup', function() {
+        const title = this.value;
+        const errorMessage = document.getElementById('title-error');
+        const regex = /^[a-zA-Z\s]*$/;
+
+        if (regex.test(title)) {
+            errorMessage.style.display = 'none';
+        } else {
+            errorMessage.style.display = 'block';
+        }
+    });
+
+    location.addEventListener('keyup', function() {
+        const location = this.value;
+        const errorMessage = document.getElementById('location-error');
+        const regex = /^[a-zA-Z\s]*$/;
+
+        if (regex.test(location)) {
+            errorMessage.style.display = 'none';
+        } else {
+            errorMessage.style.display = 'block';
+        }
+    });
+    //rooms and price are checked through HTML
 }
 
 function listing_creation() {

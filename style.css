@@ -317,7 +317,7 @@ footer a:hover {
     #listings {
         display: grid;
         grid-template-columns: 1fr; 
-    } /*maybe 2 col grid*/
+    } 
 
     .listing {
         flex-direction: column;
@@ -369,11 +369,9 @@ footer a:hover {
         display: grid;
         grid-template-columns: 1fr; 
     } 
-}
 
-/* @media (max-width: 768px) {
     footer {
         grid-template-columns: 1fr;
         text-align: center;
     }
-} */
+}

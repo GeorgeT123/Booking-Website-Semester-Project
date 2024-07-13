@@ -15,6 +15,7 @@ session_start();
     <div class="navbar" id="nav">   
         <div class="desktop">
             <?php
+                    //check if user is logged in
                     if(isset($_SESSION['user'])) {
             ?>  <a href="login.php" id="login_logout">Logout</a>
             <?php    
@@ -33,6 +34,7 @@ session_start();
             <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
             <ul class="menu">
                 <?php
+                        //check if user is logged in
                         if(isset($_SESSION['user'])) {
                 ?>  <li><a href="login.php" id="login_logout">Logout</a></li>
                 <?php    
@@ -69,6 +71,7 @@ session_start();
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 if ($stmt->rowCount() != 0) {
+                    //show every listing available
                     foreach($result as $row){
                         $photo = htmlspecialchars($row['image']);
                         $title = htmlspecialchars($row['title']);
@@ -85,8 +88,9 @@ session_start();
                             <p class="listing-price">€<?php echo $price; ?> per night</p>
                             
                             <?php
+                                //check if user is logged in
                                 if(isset($_SESSION['user'])) {
-                                $_SESSION['listing'] = $listing_id;
+                                 //sends the listing's id via url(GET)
                             ?>   <button class="booking-button" onclick="location.href='booking.php?id=<?php echo $listing_id;?>'">Book Now</button>
                             <?php    
                                 }else{        

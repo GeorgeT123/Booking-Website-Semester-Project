@@ -1,3 +1,4 @@
+//error message if username is taken
 function username_validation() {
     const element = document.createElement("p");
     element.innerHTML = "A user with this username already exists. <br>Please try again."
@@ -7,6 +8,7 @@ function username_validation() {
     document.getElementById("register").appendChild(element);
 }
 
+//error message if email has already been used
 function email_validation() {
     const element = document.createElement("p");
     element.innerHTML = "A user with this email already exists. <br>Please try again."
@@ -16,6 +18,7 @@ function email_validation() {
     document.getElementById("register").appendChild(element);
 }
 
+//message after successful login
 function login_success() {
     const form = document.getElementById("login")
     form.style.display = "none"
@@ -32,6 +35,7 @@ function login_success() {
       }, 2000);
 }
 
+//error message in case of failed login
 function login_error() {
     const element = document.createElement("p");
     element.innerHTML = "Wrong username or password. <br>Please try again."
@@ -41,6 +45,7 @@ function login_error() {
     document.getElementById("login").appendChild(element);
 }
 
+//error message in case property has been booked for the selected dates
 function date_error() {
     const element = document.createElement("p");
     element.innerHTML = "<br>The property is unavailable during these dates. <br>Please try different dates."
@@ -50,6 +55,7 @@ function date_error() {
     document.getElementById("booking-form").appendChild(element);
 }
 
+//message after successful booking of property
 function booking_success() {
     const form = document.getElementById("booking-form")
     form.style.display = "none"
@@ -63,6 +69,7 @@ function booking_success() {
       }, 3500);
 }
 
+//shows the total price for the selected dates
 function price_calculator(total_price) {
     const element = document.createElement("p");
     element.innerHTML = "The total price for the selected dates is: <br>" + total_price;
@@ -71,7 +78,8 @@ function price_calculator(total_price) {
     document.getElementById("booking-form").appendChild(element)
 }
 
-function listing_field_verification() {
+//validates if fields are correctly filled out
+function listing_field_validation() {
     //check if fields are filled out correctly
     const title = document.getElementById('title');
     const location = document.getElementById('location');
@@ -102,19 +110,16 @@ function listing_field_verification() {
     //rooms and price are checked through HTML
 }
 
+//message after succesfully listing property
 function listing_creation() {
     const form = document.getElementById("create-listing")
     form.style.display = "none"
-    console.log("1");
     const nav = document.getElementById("nav")
     nav.style.display = "none"
-    console.log("2");
     const element = document.createElement("h2");
     element.innerHTML = "Succesfully listed your property."
-    console.log("3");
     document.getElementById("create").appendChild(element);
     setTimeout(() => {
-        console.log("4");
         window.location.replace("index.php");
       }, 2000);
 }

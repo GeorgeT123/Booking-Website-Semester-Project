@@ -35,6 +35,7 @@ session_start();
     <div class="navbar" id="nav">   
         <div class="desktop">
             <?php
+                    //check if user is logged in
                     if(isset($_SESSION['user'])) {
             ?>  <a href="login.php" id="login_logout">Logout</a>
             <?php    
@@ -53,6 +54,7 @@ session_start();
             <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
             <ul class="menu">
                 <?php
+                        //check if user is logged in
                         if(isset($_SESSION['user'])) {
                 ?>  <li><a href="login.php" id="login_logout">Logout</a></li>
                 <?php    
@@ -68,6 +70,7 @@ session_start();
     </div>
     
     <?php 
+        //get the id from the url and set the username from the session variable
         $listing_id = $_GET['id'];
         $username = $_SESSION["user"];
     ?>
@@ -76,13 +79,13 @@ session_start();
         <div class="listing">
             <?php
                 // Prepare and execute query
-
                 $sql = "SELECT title, location, rooms, price, image FROM listings WHERE id='$listing_id'";
                 $stmt = $conn->prepare($sql);
                 $stmt->execute();
                 // Fetch all rows
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+                //get the info from database to show chosen listing and pre fill user's info afterwards 
                 foreach($result as $row){       
                     $photo = htmlspecialchars($row['image']);
                     $title = htmlspecialchars($row['title']);
@@ -154,10 +157,11 @@ session_start();
                             </form>
                             <style> #continue-button {display:none;} </style>
                         <?php     
+                            //calculate total price for booking
                             $discount = rand(10,30)/100;
-                            $from = new DateTime($date_from);//date('d', strtotime($date_from));
-                            $to = new DateTime($date_to);//date('d', strtotime($date_to));
-                            $num_of_days = ($from->diff($to))->days+1;//$to - $from;
+                            $from = new DateTime($date_from);
+                            $to = new DateTime($date_to);
+                            $num_of_days = ($from->diff($to))->days+1;
                             $total_price = ($price * $num_of_days) - ($price * $num_of_days)*$discount;
 
                             echo "<script>price_calculator($total_price);</script>";
@@ -173,13 +177,15 @@ session_start();
     </div>
 
     <?php
+    //temp is to make sure the code below is only run after the Book Now button is pressed
     $temp = $_POST['temp'];
     if($_SERVER["REQUEST_METHOD"] == "POST" && $temp) {   
 
         $fname = $_POST['fname'];
         $lname = $_POST['lname'];
         $email = $_POST['email'];
-
+        
+        //prepare sql and bind the variable to insert into db
         $sql = "INSERT INTO reservations (fname, lname, email, date_from, date_to, total_price, reservation_id) VALUES (:fname, :lname, :email, :date_from, :date_to, :total_price, :reservation_id)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':fname', $fname);

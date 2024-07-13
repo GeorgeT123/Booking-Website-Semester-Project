@@ -30,7 +30,8 @@ session_start();
         </div>
     </div>
     
-    <?php
+    <?php   
+            //check if user is logged in
             if(isset($_SESSION['user'])) {
                 // destroy and end the session
                 session_unset();
@@ -79,7 +80,8 @@ session_start();
             $stmt = $conn->prepare($sql);
             $stmt->execute(['username' => $username]);
             $user = $stmt->fetchColumn();
-            
+
+            //verify entered password
             $sql = "SELECT password FROM users WHERE username = '$username'";
             $stmt = $conn->prepare($sql);
             $stmt->execute();
@@ -88,6 +90,7 @@ session_start();
 
             if ($user && $verify) {
                 echo "<script>login_success();</script>";
+                //start session for the logged in user
                 $_SESSION["user"] = $username;
                 exit();
             }

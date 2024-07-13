@@ -15,6 +15,7 @@ session_start();
     <div class="navbar" id="nav">   
         <div class="desktop">
             <?php
+                    //check if user is logged in
                     if(isset($_SESSION['user'])) {
             ?>  <a href="login.php" id="login_logout">Logout</a>
             <?php    
@@ -84,7 +85,7 @@ session_start();
                 <input type="submit" value="Create listing">
 
                 <script>
-                    listing_field_verification();
+                    listing_field_validation();
                 </script>
             </form>
         </div>
@@ -100,24 +101,28 @@ session_start();
     ?>
     
     <?php
+        // Prepare and execute query
         $sql = "SELECT id FROM listings ORDER BY ID DESC LIMIT 1";
         $stmt = $conn->prepare($sql);
         $stmt->execute();
         // Fetch all rows
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         foreach($result as $row) {
+            //get last entered listing's id in order to not have overlaps in database
             $listing_id = $row['id']+1;
         }
+        //create the pasth name where the pictures are saved
         $path_name = "img\listing". $listing_id .".jpg";
         if($_SERVER["REQUEST_METHOD"] == "POST") {
-            move_uploaded_file($_FILES["photo"]["tmp_name"], $path_name);
+            move_uploaded_file($_FILES["photo"]["tmp_name"], $path_name); //save pictures to path
             $title = $_POST['title'];
             $location = $_POST['location'];
             $rooms = $_POST['rooms'];
             $price_per_night = $_POST['price'];
 
-            //check if info has been correctly entered
+            //check if info has been correctly entered and insert into database
             if(ctype_alpha(str_replace(' ', '', $title)) && ctype_alpha(str_replace(' ', '', $location)) && filter_var($rooms, FILTER_VALIDATE_INT) && filter_var($price_per_night, FILTER_VALIDATE_INT)) {
+                // Prepare and execute query
                 $sql = "INSERT INTO listings (title, location, rooms, price, image) VALUES (:title, :location, :rooms, :price, :image)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindParam(':title', $title);
